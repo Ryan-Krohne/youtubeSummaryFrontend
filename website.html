@@ -71,7 +71,7 @@
         const summaryDiv = document.getElementById('summary');
         const container = document.getElementById('container');
 
-        form.addEventListener('submit', async (e) => {
+        /* form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const youtubeLink = document.getElementById('youtubeLink').value;
 
@@ -98,6 +98,31 @@
                 summaryDiv.innerText = 'Error: ' + error.message;
             }
         });
+        */
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            try {
+                const response = await fetch('https://renderbackend-8hhs.onrender.com/version', {
+                    method: 'GET',
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the version');
+                }
+    
+                const data = await response.json();
+    
+                container.style.width = '1000px';
+                summaryDiv.style.display = 'block';
+                summaryDiv.innerText = 'Version: ' + data.version;
+            } catch (error) {
+                summaryDiv.style.display = 'block';
+                summaryDiv.innerText = 'Error: ' + error.message;
+            }
+        });
+
+
     </script>
 </body>
 </html>
